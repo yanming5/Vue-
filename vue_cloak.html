@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue使用</title>
+</head>
+<script type="text/javascript" src="vue-2.4.0.js"></script>
+<body>
+	<div id="box" style=" margin: 10px 100px">
+		<h1>{{ p }}</h1>
+		<p v-cloak>{{ txt }}====给元素添加[v-cloak] ，在网速慢的时候不会出现闪烁 问题 </p>
+		<h2 v-html="html_data"></h2>
+		<h2 v-text="text_data"></h2>
+		<input type="button" value="把你的小手放在我身上[bind]"v-bind:title="bind_txt + 'me还能拼接字符串'">
+		<hr />
+		<input type="button" value="浪奇来" @click="lang">
+		<input type="button" value="stop" @click="stop"><br>
+		<input style="margin-top: 20px;" type="button" v-bind:value="msg">
+	</div>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: "#box",
+			data: {
+				p: "<p>这是第一天学习Vue </p>",
+				html_data: "这是使用v-html属性添加的;使用v-html会覆盖元素原有内容",
+				text_data: "这是使用v-text属性添加的;使用v-text会覆盖元素原有内容",
+				txt: "这是使用{{占位符来填充的内容}}",
+				bind_txt: "meyesBind",
+				msg: '猥琐发育，别浪~~！',
+        		intervalId: null // 在data上定义 定时器Id
+			},
+			methods: {
+				lang() {
+					if(this.intervalId != null) return;
+					this.intervalId = setInterval(() => {
+						var start = this.msg.substring(length-1, 1);
+						var end = this.msg.substring(1);
+						this.msg = end + start;
+						console.log(this.msg);
+					}, 400);
+
+				},
+				stop() {
+					clearInterval(this.intervalId);
+					this.intervalId = null;
+				}
+				
+			}
+		})
+	</script>
+</body>
+</html>
